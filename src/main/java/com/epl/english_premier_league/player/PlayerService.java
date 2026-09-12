@@ -1,11 +1,9 @@
 package com.epl.english_premier_league.player;
 
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class PlayerService {
@@ -48,8 +46,14 @@ public class PlayerService {
         return true;
     }
 
-    //TODO: handle adding player already existed
     public Player addPlayer(Player player) {
+
+        if (playerRepository.existsByNameIgnoreCaseAndTeamIgnoreCase(player.getName(), player.getTeam())) {
+            throw new IllegalArgumentException(
+                    "Player already exists on this team"
+            );
+        }
+
         return playerRepository.save(player);
     }
 

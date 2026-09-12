@@ -12,7 +12,10 @@ import jakarta.validation.constraints.NotNull;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "player_stats")
+@Table(
+    name = "player_stats",
+    uniqueConstraints = { @UniqueConstraint(columnNames = {"name", "team"}) }
+)
 public class Player {
 
     @Id
