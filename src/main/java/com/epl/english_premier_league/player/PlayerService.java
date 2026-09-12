@@ -4,6 +4,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -47,7 +48,24 @@ public class PlayerService {
         return true;
     }
 
+    //TODO: handle adding player already existed
     public Player addPlayer(Player player) {
         return playerRepository.save(player);
+    }
+
+    public Player updatePlayer(Integer id, Player updatedPlayer){
+        Optional<Player> existingPlayer = playerRepository.findById(id);
+
+        if(existingPlayer.isPresent()){
+            Player playerToUpdate = existingPlayer.get();
+
+            playerToUpdate.setName(updatedPlayer.getName());
+            playerToUpdate.setTeam(updatedPlayer.getTeam());
+            playerToUpdate.setPos(updatedPlayer.getPos());
+            playerToUpdate.setNation(updatedPlayer.getNation());
+
+            return playerRepository.save(playerToUpdate);
+        }
+        return null;
     }
 }

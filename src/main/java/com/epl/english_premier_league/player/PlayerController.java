@@ -59,4 +59,18 @@ public class PlayerController {
 
             return ResponseEntity.notFound().build(); // 404
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Player> updatePlayer(
+            @PathVariable Integer id,
+            @RequestBody Player updatedPlayer)
+    {
+        Player player = playerService.updatePlayer(id, updatedPlayer);
+
+        if (player != null) {
+            return new ResponseEntity<>(player, HttpStatus.OK);
+        }
+
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
 }
