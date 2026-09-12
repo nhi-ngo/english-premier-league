@@ -5,6 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -16,13 +19,20 @@ public class Player {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @NotBlank
     private String name;
 
+    @NotBlank
     private String nation;
 
+    @NotBlank
     private String pos;
 
+    @NotNull
     private Integer age;
+
+    @NotBlank
+    private String team;
 
     private Integer mp;
 
@@ -44,5 +54,4 @@ public class Player {
 
     private Double xag;
 
-    private String team;
 }

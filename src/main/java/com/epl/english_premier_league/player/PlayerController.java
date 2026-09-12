@@ -1,5 +1,6 @@
 package com.epl.english_premier_league.player;
 
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -44,8 +45,10 @@ public class PlayerController {
     }
 
     @PostMapping
-    public ResponseEntity<Player> addPlayer(@RequestBody Player player){
+    public ResponseEntity<Player> addPlayer(@Valid @RequestBody Player player){
+
         Player createdPlayer = playerService.addPlayer(player);
+
         return new ResponseEntity<>(createdPlayer, HttpStatus.CREATED);
     }
 
