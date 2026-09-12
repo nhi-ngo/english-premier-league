@@ -1,9 +1,10 @@
 package com.epl.english_premier_league.player;
 
-import jakarta.transaction.Transactional;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class PlayerService {
@@ -26,7 +27,7 @@ public class PlayerService {
         return playerRepository.findByTeamIgnoreCase(teamName);
     }
 
-    public List<Player> getPlayerByPos(String searchText){
+    public List<Player> getPlayersByPos(String searchText){
         return playerRepository.findByPosIgnoreCase(searchText);
     }
 
@@ -38,4 +39,15 @@ public class PlayerService {
         return playerRepository.findByTeamAndPos(team, position);
     }
 
+    public boolean deletePlayer(Integer id){
+        if(!playerRepository.existsById(id)){
+            return false;
+        }
+        playerRepository.deleteById(id);
+        return true;
+    }
+
+    public Player addPlayer(Player player) {
+        return playerRepository.save(player);
+    }
 }

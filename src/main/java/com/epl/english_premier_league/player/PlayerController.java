@@ -1,9 +1,8 @@
 package com.epl.english_premier_league.player;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -31,7 +30,7 @@ public class PlayerController {
             return playerService.getPlayersFromTeam(team);
         }
         else if(position != null){
-            return playerService.getPlayerByPos(position);
+            return playerService.getPlayersByPos(position);
         }
         else if(name != null){
             return playerService.getPlayersByName(name);
@@ -42,5 +41,22 @@ public class PlayerController {
         else{
             return playerService.getPlayers();
         }
+    }
+
+    @PostMapping
+    public ResponseEntity<Player> addPlayer(@RequestBody Player player){
+        Player createdPlayer = playerService.addPlayer(player);
+        return new ResponseEntity<>(createdPlayer, HttpStatus.CREATED);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deletePlayer(@PathVariable Integer id){
+            boolean isPlayerDeleted = playerService.deletePlayer(id);
+
+            if (isPlayerDeleted) {
+                return ResponseEntity.noContent().build(); // 204
+            }
+
+            return ResponseEntity.notFound().build(); // 404
     }
 }

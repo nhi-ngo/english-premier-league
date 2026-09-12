@@ -9,8 +9,6 @@ import java.util.Optional;
 @Repository
 public interface PlayerRepository extends JpaRepository<Player, Integer> {
 
-    void deleteByName(String name);
-
     Optional<Player> findByName(String name);
 
     List<Player> findByNameContainingIgnoreCase(String name);
